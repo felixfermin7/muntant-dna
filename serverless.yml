@@ -29,3 +29,10 @@ functions:
           method: post
           cors: ${self:custom.cors}
   
+  getStats:
+    handler: ./lib/src/handlers/mutantsHandler.getStats
+    events:
+      - http:
+          path: /stats
+          method: get
+          cors: ${self:custom.cors}
