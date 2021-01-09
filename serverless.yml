@@ -1,0 +1,31 @@
+service: mutant-dna
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+custom:
+  config: ./config/config.${self:provider.stage}.json
+  cors:
+    origin: '*'
+    headers:
+      - Content-Type
+
+package:
+  include:
+    - ./lib/**
+  exclude:
+    - node_modules/**
+
+functions:
+  evaluateDna:
+    handler: ./lib/src/handlers/mutantsHandler.evaluateDna
+    events:
+      - http:
+          path: /mutant
+          method: post
+          cors: ${self:custom.cors}
+  
