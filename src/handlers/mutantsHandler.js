@@ -22,7 +22,6 @@ async function evaluateDna(event) {
 
     return parseResponse(200)
   } catch (e) {
-    console.log(e)
     return errorHandler(e, 'Could not evaluate mutant')
   }
 }
@@ -33,11 +32,11 @@ async function getStats() {
 
     return parseResponse(200, response)
   } catch (e) {
-    console.log(e)
     return errorHandler(e, 'Could not evaluate mutant')
   }
 }
 
 module.exports = {
-  evaluateDna, getStats
+  evaluateDna,
+  getStats,
 }

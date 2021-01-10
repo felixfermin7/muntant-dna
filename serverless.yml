@@ -6,23 +6,26 @@ plugins:
 provider:
   name: aws
   runtime: nodejs10.x
-
+  stage: ${file(config.js):stage}
+  region: us-east-1
+  environment:
+    STAGE: ${self:provider.stage}
+    DB_HOST: ${file(credentials-${self:provider.stage}.json):dbHost}
+    DB_PORT: ${file(credentials-${self:provider.stage}.json):dbPort}
+    DB_PASSWORD: ${file(credentials-${self:provider.stage}.json):dbPassword}
+    DB_USER: ${file(credentials-${self:provider.stage}.json):dbUser}
+    DB_NAME: ${file(credentials-${self:provider.stage}.json):dbName}
+   
 custom:
-  config: ./config/config.${self:provider.stage}.json
   cors:
     origin: '*'
     headers:
       - Content-Type
 
-package:
-  include:
-    - ./lib/**
-  exclude:
-    - node_modules/**
-
 functions:
   evaluateDna:
-    handler: ./lib/src/handlers/mutantsHandler.evaluateDna
+    handler: ./src/handlers/mutantsHandler.evaluateDna
+    timeout: 30
     events:
       - http:
           path: /mutant
@@ -30,7 +33,8 @@ functions:
           cors: ${self:custom.cors}
   
   getStats:
-    handler: ./lib/src/handlers/mutantsHandler.getStats
+    handler: ./src/handlers/mutantsHandler.getStats
+    timeout: 30
     events:
       - http:
           path: /stats

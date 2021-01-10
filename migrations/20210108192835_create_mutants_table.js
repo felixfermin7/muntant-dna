@@ -1,4 +1,4 @@
-const { MUTANTS } = require('../lib/src/repositories/tableNames')
+const { MUTANTS } = require('../src/repositories/tableNames')
 
 module.exports.up = knex =>
   knex.schema.createTable(MUTANTS, table => {

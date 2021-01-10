@@ -12,9 +12,7 @@ Run npm install
 
 Run npm run migrations
 
-Run npm run seeds
-
 Run npm start
 
 Postman collection
-https://www.getpostman.com/collections/6a81b4889bc49505e526
+https://www.getpostman.com/collections/a3c1f908d861d8ffc040

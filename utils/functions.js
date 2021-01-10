@@ -16,10 +16,13 @@ const parseResponse = (status, body) => {
   }
 }
 
-const errorHandler = (e, genericMessage) =>
-  e && e.code && e.statusCode
+const errorHandler = (e, genericMessage) => {
+  console.error(e)
+
+  return e && e.code && e.statusCode
     ? parseResponse(e.code, { message: e.error.message, code: e.statusCode })
     : parseResponse(500, { message: genericMessage, code: 'InternalServerError' })
+}
 
 const notFoundError = () => ({
   code: 404,
