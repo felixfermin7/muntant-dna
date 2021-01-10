@@ -1,9 +1,4 @@
-const ALLOWED_LETTERS = {
-  A: 'A',
-  T: 'T',
-  C: 'C',
-  G: 'G',
-}
+const { ALLOWED_LETTERS } = require('../config')
 
 const parseResponse = (status, body) => {
   return {

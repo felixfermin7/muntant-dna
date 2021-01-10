@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "sls offline",
-    "test": "knex seed:run & ./node_modules/nyc/bin/nyc.js mocha tests/**/*Test.js --exit",
+    "test": "./node_modules/nyc/bin/nyc.js mocha tests/**/*Test.js --exit",
     "migrations": "knex migrate:latest",
     "format": "prettier --write '*.js' 'src/*/*.js'",
     "deploy": "export AWS_PROFILE=default && serverless deploy"
@@ -17,7 +17,6 @@
   "author": "Felix Fermin",
   "dependencies": {
     "aws-sdk": "^2.482.0",
-    "chai-http": "^4.3.0",
     "joi": "^17.3.0",
     "knex": "^0.21.5",
     "md5": "^2.3.0",
@@ -31,6 +30,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "mocha": "^6.2.1",
-    "prettier": "2.2.1"
+    "prettier": "2.2.1",
+    "sinon": "^9.2.3"
   }
 }

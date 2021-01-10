@@ -16,3 +16,5 @@ Run npm start
 
 Postman collection
 https://www.getpostman.com/collections/a3c1f908d861d8ffc040
+
+Run tests: npm run test

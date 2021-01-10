@@ -7,9 +7,9 @@ const {
   errorHandler,
 } = require('../../utils/functions')
 
-async function evaluateDna(event) {
+async function evaluateDna(event = {}) {
   try {
-    const { body } = event
+    const { body = '{}' } = event
     const params = JSON.parse(body)
 
     //Validation of the received data format
@@ -32,7 +32,7 @@ async function getStats() {
 
     return parseResponse(200, response)
   } catch (e) {
-    return errorHandler(e, 'Could not evaluate mutant')
+    return errorHandler(e, 'Could not get stats')
   }
 }
 
