@@ -1,15 +1,13 @@
 const { ALLOWED_LETTERS } = require('../config')
 
-const parseResponse = (status, body) => {
-  return {
-    statusCode: status,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-    },
-    body: JSON.stringify(body),
-  }
-}
+const parseResponse = (status, body) => ({
+  statusCode: status,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': true,
+  },
+  body: JSON.stringify(body),
+})
 
 const errorHandler = (e, genericMessage) => {
   console.error(e)

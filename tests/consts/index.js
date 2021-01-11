@@ -8,6 +8,8 @@ const {
   getStatsValidResponse,
   validEvaluateDnaShortNoMutantRequest,
   getStatsEmptyValidResponse,
+  validEvaluateDnaMutantTwoITRequest,
+  validEvaluateDnaMutantOneITRequest,
 } = require('./mutantsConsts')
 
 const { mutantsData } = require('./tablesData')
@@ -23,4 +25,6 @@ module.exports = {
   getStatsValidResponse,
   validEvaluateDnaShortNoMutantRequest,
   getStatsEmptyValidResponse,
+  validEvaluateDnaMutantTwoITRequest,
+  validEvaluateDnaMutantOneITRequest,
 }

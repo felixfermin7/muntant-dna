@@ -28,6 +28,18 @@ const validEvaluateDnaMutantRequest = {
   }),
 }
 
+const validEvaluateDnaMutantOneITRequest = {
+  body: JSON.stringify({
+    dna: ['AAAAGA', 'CAGTGC', 'TTATGT', 'AGAAGG', 'CCCCTA', 'TCACTG'],
+  }),
+}
+
+const validEvaluateDnaMutantTwoITRequest = {
+  body: JSON.stringify({
+    dna: ['TTTTTC', 'CAGTGC', 'TTATGT', 'AGAAGG', 'CCCCTA', 'TCACTG'],
+  }),
+}
+
 const validEvaluateDnaMutantWithTwoHorizontalRequest = {
   body: JSON.stringify({
     dna: ['ATTTTA', 'CAGTGC', 'TTATGT', 'AGAAGG', 'CCCCTA', 'TCACTG'],
@@ -60,4 +72,6 @@ module.exports = {
   getStatsValidResponse,
   validEvaluateDnaShortNoMutantRequest,
   getStatsEmptyValidResponse,
+  validEvaluateDnaMutantTwoITRequest,
+  validEvaluateDnaMutantOneITRequest,
 }

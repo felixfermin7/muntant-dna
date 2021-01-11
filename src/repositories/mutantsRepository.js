@@ -3,7 +3,7 @@ const db = require('../../utils/db')
 
 async function insertMany(mutants) {
   const { database, connection } = await db.get()
-  const collection = database.collection('mutants')
+  const collection = database.collection(MUTANTS)
 
   const response = await collection.insertMany(mutants)
   await connection.close()
@@ -13,7 +13,7 @@ async function insertMany(mutants) {
 
 async function deleteAll() {
   const { database, connection } = await db.get()
-  const collection = database.collection('mutants')
+  const collection = database.collection(MUTANTS)
 
   const response = await collection.deleteMany()
   await connection.close()
@@ -24,7 +24,7 @@ async function deleteAll() {
 async function upsert(mutant) {
   const { id, ...data } = mutant
   const { database, connection } = await db.get()
-  const collection = database.collection('mutants')
+  const collection = database.collection(MUTANTS)
 
   const response = await collection.updateOne({ id }, { $set: { ...data } }, { upsert: true })
   await connection.close()
@@ -34,7 +34,7 @@ async function upsert(mutant) {
 
 async function countAll() {
   const { database, connection } = await db.get()
-  const collection = database.collection('mutants')
+  const collection = database.collection(MUTANTS)
   const cursor = collection.find()
   const count = await cursor.count()
 
@@ -45,7 +45,7 @@ async function countAll() {
 
 async function countMuntants() {
   const { database, connection } = await db.get()
-  const collection = database.collection('mutants')
+  const collection = database.collection(MUTANTS)
   const cursor = collection.find({ is_mutant: true })
   const count = await cursor.count()
 
