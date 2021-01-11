@@ -1,31 +1,63 @@
 const { MUTANTS } = require('./tableNames')
 const db = require('../../utils/db')
 
-function get(id) {
-  return db(MUTANTS).select('*').where({ id }).first()
+async function insertMany(mutants) {
+  const { database, connection } = await db.get()
+  const collection = database.collection('mutants')
+
+  const response = await collection.insertMany(mutants)
+  await connection.close()
+
+  return response
 }
 
-function create(mutant) {
-  return db(MUTANTS).insert(mutant).returning('*')
+async function deleteAll() {
+  const { database, connection } = await db.get()
+  const collection = database.collection('mutants')
+
+  const response = await collection.deleteMany()
+  await connection.close()
+
+  return response
 }
 
-function update(id, data) {
-  return db(MUTANTS)
-    .update({
-      ...data,
-      updated_at: db.raw('NOW()'),
-    })
-    .where({ id })
-    .returning('*')
+async function upsert(mutant) {
+  const { id, ...data } = mutant
+  const { database, connection } = await db.get()
+  const collection = database.collection('mutants')
+
+  const response = await collection.updateOne({ id }, { $set: { ...data } }, { upsert: true })
+  await connection.close()
+
+  return response
 }
 
-function getAll() {
-  return db(MUTANTS).select('*')
+async function countAll() {
+  const { database, connection } = await db.get()
+  const collection = database.collection('mutants')
+  const cursor = collection.find()
+  const count = await cursor.count()
+
+  await connection.close()
+
+  return count
+}
+
+async function countMuntants() {
+  const { database, connection } = await db.get()
+  const collection = database.collection('mutants')
+  const cursor = collection.find({ is_mutant: true })
+  const count = await cursor.count()
+
+  await connection.close()
+
+  return count
 }
 
 module.exports = {
-  create,
-  get,
-  getAll,
-  update,
+  countAll,
+  countMuntants,
+  deleteAll,
+  insertMany,
+  upsert,
 }

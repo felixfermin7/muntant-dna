@@ -4,8 +4,6 @@ const MutantsHandler = require('../../src/handlers/mutantsHandler')
 const MutantsService = require('../../src/services/mutantsService')
 const MuntantsHelper = require('../../src/helpers/muntantsHelper')
 const MutantsRepository = require('../../src/repositories/mutantsRepository')
-const { MUTANTS } = require('../../src/repositories/tableNames')
-const db = require('../../utils/db')
 
 const {
   invalidEvaluateDnaFieldRequest,
@@ -30,7 +28,6 @@ describe('Muntatns handlers tests', () => {
       sandbox = sinon.createSandbox()
       evaluateDnaSpy = sandbox.spy(MutantsService, 'evaluateDna')
       evaluateItemSpy = sandbox.spy(MuntantsHelper, 'evaluateItem')
-      await db.raw(`TRUNCATE TABLE ${MUTANTS} CASCADE`)
     })
 
     afterEach(() => {
@@ -84,7 +81,6 @@ describe('Muntatns handlers tests', () => {
 
     describe('When calling with valid dna mutant field ', () => {
       it('Should get 200', async () => {
-        await MutantsRepository.create(mutantsData)
         const response = await MutantsHandler.evaluateDna(validEvaluateDnaMutantRequest)
         assert.equal(response.statusCode, 200)
         assert.equal(evaluateDnaSpy.called, true)
@@ -114,7 +110,7 @@ describe('Muntatns handlers tests', () => {
 
     describe('When calling with valid dna and get unexpected error ', () => {
       it('Should get 500 Could not evaluate mutant', async () => {
-        sandbox.stub(MutantsRepository, 'get').rejects()
+        sandbox.stub(MutantsRepository, 'upsert').rejects()
         const response = await MutantsHandler.evaluateDna(validEvaluateDnaNoMutantRequest)
         assert.equal(response.statusCode, 500)
         assert.equal(JSON.parse(response.body).message, 'Could not evaluate mutant')
@@ -126,7 +122,7 @@ describe('Muntatns handlers tests', () => {
   describe('getStats function', () => {
     beforeEach(async () => {
       sandbox = sinon.createSandbox()
-      await db.raw(`TRUNCATE TABLE ${MUTANTS} CASCADE`)
+      await MutantsRepository.deleteAll()
     })
 
     afterEach(() => {
@@ -135,7 +131,7 @@ describe('Muntatns handlers tests', () => {
 
     describe('When calling with fill db', () => {
       it('Should get 200', async () => {
-        await MutantsRepository.create(mutantsData)
+        await MutantsRepository.insertMany(mutantsData)
         const response = await MutantsHandler.getStats()
         assert.equal(response.statusCode, 200)
         assert.deepEqual(JSON.parse(response.body), getStatsValidResponse)
@@ -152,7 +148,7 @@ describe('Muntatns handlers tests', () => {
 
     describe('When calling and get unexpected error', () => {
       it('Should get 500 Could not get stats', async () => {
-        sandbox.stub(MutantsRepository, 'getAll').rejects()
+        sandbox.stub(MutantsRepository, 'countAll').rejects()
         const response = await MutantsHandler.getStats()
         assert.equal(response.statusCode, 500)
         assert.equal(JSON.parse(response.body).message, 'Could not get stats')

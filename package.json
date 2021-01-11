@@ -2,14 +2,9 @@
   "name": "mutant-dna",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
   "scripts": {
     "start": "sls offline",
     "test": "./node_modules/nyc/bin/nyc.js mocha tests/**/*Test.js --exit",
-    "migrations": "knex migrate:latest",
     "format": "prettier --write '*.js' 'src/*/*.js'",
     "deploy": "export AWS_PROFILE=default && serverless deploy"
   },
@@ -18,8 +13,8 @@
   "dependencies": {
     "aws-sdk": "^2.482.0",
     "joi": "^17.3.0",
-    "knex": "^0.21.5",
     "md5": "^2.3.0",
+    "mongodb": "^3.6.3",
     "nyc": "^15.1.0",
     "pg": "^8.3.3",
     "serverless-offline": "^4.10.6"
